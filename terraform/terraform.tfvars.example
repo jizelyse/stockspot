@@ -1,0 +1,7 @@
+subscription_id  = "00000000-0000-0000-0000-000000000000"
+dns_label        = "stockspot-yourname"          # must be globally unique
+ssh_public_key   = "ssh-ed25519 AAAA... you@laptop"
+ssh_allowed_cidr = "203.0.113.7/32"              # your public IP (search "what is my ip")
+repo_url         = "https://github.com/YOUR-USERNAME/stockspot.git"
+location         = "southeastasia"
+enable_auto_shutdown = false

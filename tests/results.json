@@ -1,0 +1,527 @@
+[
+ {
+  "id": "T01",
+  "area": "Access control",
+  "test": "Visiting a page without logging in redirects to login",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T02",
+  "area": "Authentication",
+  "test": "Wrong password is rejected with an error message",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T03",
+  "area": "Authentication",
+  "test": "Empty login fields are rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T04",
+  "area": "Authentication",
+  "test": "Owner can log in and reaches the dashboard",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T05",
+  "area": "Authentication",
+  "test": "Staff can log in",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T06",
+  "area": "Access control",
+  "test": "Staff cannot open the Users page (403)",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T07",
+  "area": "Access control",
+  "test": "Owner can open the Users page",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T08",
+  "area": "Dashboard",
+  "test": "Dashboard lists low-stock items (Cola 1.5L)",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T09",
+  "area": "Dashboard",
+  "test": "Dashboard lists expiring item (Corned Beef 150g)",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T10",
+  "area": "Access control",
+  "test": "Inventory page requires login",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T11",
+  "area": "Security",
+  "test": "POST without CSRF token is rejected (HTTP 419)",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T12",
+  "area": "Inventory",
+  "test": "Search finds products by name",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T13",
+  "area": "Inventory",
+  "test": "Status filter shows only LOW products",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T14",
+  "area": "Inventory",
+  "test": "Category filter works",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T15",
+  "area": "Validation",
+  "test": "Product with empty name is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T16",
+  "area": "Validation",
+  "test": "Negative price is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T17",
+  "area": "Validation",
+  "test": "Non-numeric reorder level is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T18",
+  "area": "Validation",
+  "test": "Duplicate SKU is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T19",
+  "area": "Inventory",
+  "test": "Valid product is created (SKU upper-cased)",
+  "result": "PASS",
+  "detail": "http://127.0.0.1:8080/product_view.php?id=17"
+ },
+ {
+  "id": "T20",
+  "area": "Inventory",
+  "test": "Product can be edited",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T21",
+  "area": "Security",
+  "test": "HTML in product name is escaped (no XSS)",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T22",
+  "area": "Validation",
+  "test": "Unknown product id returns 404",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T23",
+  "area": "Validation",
+  "test": "Quantity 0 is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T24",
+  "area": "Validation",
+  "test": "Negative quantity is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T25",
+  "area": "Validation",
+  "test": "Stock in for expiring product requires expiry date",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T26",
+  "area": "Validation",
+  "test": "Past expiry date is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T27",
+  "area": "Stock",
+  "test": "Stock in creates a batch",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T28",
+  "area": "Stock",
+  "test": "Stock out uses earliest-expiry batch first (FEFO)",
+  "result": "PASS",
+  "detail": "['0@2026-10-22', '8@2026-12-01']"
+ },
+ {
+  "id": "T29",
+  "area": "Validation",
+  "test": "Stock out above available stock is blocked",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T30",
+  "area": "Stock",
+  "test": "Blocked stock out leaves stock unchanged",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T31",
+  "area": "Validation",
+  "test": "Waste without a reason is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T32",
+  "area": "Stock",
+  "test": "Waste reduces stock and is logged as WASTE",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T33",
+  "area": "Stock",
+  "test": "Negative adjustment reduces stock",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T34",
+  "area": "Stock",
+  "test": "Positive adjustment adds stock",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T35",
+  "area": "Audit",
+  "test": "Every movement records the user who made it (2 different users)",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T36",
+  "area": "Audit",
+  "test": "Sum of movements equals sum of batch quantities",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T37",
+  "area": "Movement log",
+  "test": "Movement log filter by type works",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T38",
+  "area": "Inventory",
+  "test": "Product detail page shows batches and movements",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T39",
+  "area": "Dashboard",
+  "test": "Product at/below reorder level appears in low-stock alerts",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T40",
+  "area": "Validation",
+  "test": "Supplier without name is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T41",
+  "area": "Validation",
+  "test": "Invalid supplier phone number is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T42",
+  "area": "Suppliers",
+  "test": "Valid supplier is created",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T43",
+  "area": "Suppliers",
+  "test": "Supplier linked to products cannot be deleted",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T44",
+  "area": "Access control",
+  "test": "Staff cannot delete a supplier (403)",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T45",
+  "area": "Suppliers",
+  "test": "Owner can delete an unused supplier",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T46",
+  "area": "Purchase orders",
+  "test": "Reorder suggestions list low-stock products by supplier",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T47",
+  "area": "Validation",
+  "test": "Suggested order with quantity 0 is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T48",
+  "area": "Purchase orders",
+  "test": "Creating from suggestions makes one draft PO per supplier",
+  "result": "PASS",
+  "detail": "2"
+ },
+ {
+  "id": "T49",
+  "area": "Purchase orders",
+  "test": "Draft PO can be marked as Ordered",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T50",
+  "area": "Validation",
+  "test": "Receiving with an invalid quantity is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T51",
+  "area": "Purchase orders",
+  "test": "Receiving a PO adds stock; the batch is linked to the PO item",
+  "result": "PASS",
+  "detail": "6->30"
+ },
+ {
+  "id": "T52",
+  "area": "Purchase orders",
+  "test": "Received PO status becomes Received",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T53",
+  "area": "Purchase orders",
+  "test": "Receiving the same PO twice does not double the stock",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T54",
+  "area": "Purchase orders",
+  "test": "Manual PO page lists the supplier's products",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T55",
+  "area": "Import",
+  "test": "CSV with unknown SKU / bad quantity is rejected with line numbers",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T56",
+  "area": "Import",
+  "test": "CSV that would oversell is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T57",
+  "area": "Import",
+  "test": "Rejected import changes nothing (all-or-nothing)",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T58",
+  "area": "Import",
+  "test": "Non-CSV file is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T59",
+  "area": "Import",
+  "test": "Valid CSV reduces stock",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T60",
+  "area": "Reports",
+  "test": "Low-stock report loads",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T61",
+  "area": "Reports",
+  "test": "Expiry report loads",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T62",
+  "area": "Reports",
+  "test": "Movement summary report loads",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T63",
+  "area": "Reports",
+  "test": "Wastage report loads",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T64",
+  "area": "Reports",
+  "test": "Report can be downloaded as CSV",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T65",
+  "area": "Shift notes",
+  "test": "Empty note is rejected",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T66",
+  "area": "Shift notes",
+  "test": "Staff can post a note (HTML is escaped)",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T67",
+  "area": "Validation",
+  "test": "Weak password is rejected when adding a user",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T68",
+  "area": "Users",
+  "test": "Owner can add a substitute staff user",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T69",
+  "area": "Users",
+  "test": "New user can log in",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T70",
+  "area": "Users",
+  "test": "Deactivated user can no longer log in",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T71",
+  "area": "Account",
+  "test": "Password change needs the correct current password",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T72",
+  "area": "Account",
+  "test": "Password can be changed",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T73",
+  "area": "Security",
+  "test": "Login is temporarily locked after 5 failed attempts",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T74",
+  "area": "Authentication",
+  "test": "Logout ends the session",
+  "result": "PASS",
+  "detail": ""
+ },
+ {
+  "id": "T75",
+  "area": "Security",
+  "test": "SQL injection attempt in login does not authenticate",
+  "result": "PASS",
+  "detail": ""
+ }
+]

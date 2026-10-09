@@ -1,0 +1,11 @@
+.env
+*.tfstate
+*.tfstate.*
+.terraform/
+terraform.tfvars
+backups/
+terraform
+docs
+tests
+.git
+.github

@@ -1,0 +1,44 @@
+# Production stack for the Azure VM:  docker compose -f docker-compose.prod.yml up -d --build
+# Only Caddy is exposed (ports 80/443). The app and database are on a private Docker network.
+services:
+  caddy:
+    image: caddy:2
+    ports: ["80:80", "443:443"]
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:?set SITE_ADDRESS in .env}
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+    depends_on: [web]
+    restart: unless-stopped
+  web:
+    build: .
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME:-stockspot}
+      DB_USER: ${DB_USER:-stockspot}
+      DB_PASS: ${DB_PASS:?set DB_PASS in .env}
+    depends_on:
+      db: { condition: service_healthy }
+    restart: unless-stopped
+  db:
+    image: mariadb:10.11
+    environment:
+      MARIADB_DATABASE: ${DB_NAME:-stockspot}
+      MARIADB_USER: ${DB_USER:-stockspot}
+      MARIADB_PASSWORD: ${DB_PASS:?set DB_PASS in .env}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS:?set DB_ROOT_PASS in .env}
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      - ./docker/mariadb.cnf:/etc/mysql/conf.d/low-memory.cnf:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+volumes:
+  dbdata:
+  caddy_data:

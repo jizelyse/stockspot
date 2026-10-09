@@ -1,0 +1,38 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env: { MARIADB_ROOT_PASSWORD: root, MARIADB_DATABASE: stockspot }
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=5s --health-timeout=5s --health-retries=20
+    env:
+      DB_HOST: 127.0.0.1
+      DB_USER: root
+      DB_PASS: root
+      STOCKSPOT_MYSQL: mysql -h127.0.0.1 -uroot -proot
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with: { php-version: "8.3", extensions: pdo_mysql, tools: none }
+      - name: PHP syntax check
+        run: find includes public -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Load schema and sample data
+        run: |
+          mysql -h127.0.0.1 -uroot -proot stockspot < database/schema.sql
+          mysql -h127.0.0.1 -uroot -proot stockspot < database/seed.sql
+      - name: Start app and run functional tests
+        run: |
+          (cd public && php -S 127.0.0.1:8080 > /tmp/php.log 2>&1 &)
+          sleep 2
+          python3 tests/run_tests.py
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with: { name: test-results, path: tests/results.json }

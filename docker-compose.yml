@@ -1,0 +1,33 @@
+# Local / development stack:  docker compose up --build   ->  http://localhost:8080
+services:
+  web:
+    build: .
+    ports: ["8080:80"]
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME:-stockspot}
+      DB_USER: ${DB_USER:-stockspot}
+      DB_PASS: ${DB_PASS:-stockspot_pw}
+    depends_on:
+      db: { condition: service_healthy }
+    restart: unless-stopped
+  db:
+    image: mariadb:10.11
+    environment:
+      MARIADB_DATABASE: ${DB_NAME:-stockspot}
+      MARIADB_USER: ${DB_USER:-stockspot}
+      MARIADB_PASSWORD: ${DB_PASS:-stockspot_pw}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS:-root_pw}
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      - ./docker/mariadb.cnf:/etc/mysql/conf.d/low-memory.cnf:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+volumes:
+  dbdata:

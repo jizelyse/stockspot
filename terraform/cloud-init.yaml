@@ -1,0 +1,24 @@
+#cloud-config
+# Runs once on first boot: installs Docker, clones the repo, generates secrets, starts the stack.
+package_update: true
+packages: [docker.io, docker-compose-v2, git, fail2ban, unattended-upgrades, curl]
+write_files:
+  - path: /usr/local/bin/stockspot-bootstrap.sh
+    permissions: "0755"
+    content: |
+      #!/bin/bash
+      set -euxo pipefail
+      # 2 GB swap so MariaDB + PHP never run out of memory on a 1 GB VM
+      if [ ! -f /swapfile ]; then fallocate -l 2G /swapfile; chmod 600 /swapfile; mkswap /swapfile; swapon /swapfile; echo '/swapfile none swap sw 0 0' >> /etc/fstab; fi
+      systemctl enable --now docker fail2ban
+      usermod -aG docker ${user}
+      cd /home/${user}
+      sudo -u ${user} git clone ${repo_url} stockspot
+      cd stockspot
+      sudo -u ${user} bash -c 'printf "DB_NAME=stockspot\nDB_USER=stockspot\nDB_PASS=%s\nDB_ROOT_PASS=%s\nSITE_ADDRESS=%s\n" "$(openssl rand -hex 16)" "$(openssl rand -hex 16)" "${fqdn}" > .env'
+      chmod 600 .env
+      docker compose -f docker-compose.prod.yml up -d --build
+      # nightly backup at 02:00
+      (sudo -u ${user} crontab -l 2>/dev/null; echo "0 2 * * * /home/${user}/stockspot/docker/backup.sh >> /home/${user}/backup.log 2>&1") | sudo -u ${user} crontab -
+runcmd:
+  - [bash, /usr/local/bin/stockspot-bootstrap.sh]
