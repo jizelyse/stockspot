@@ -40,6 +40,5 @@ function page_header(string $title, string $active = ''): void {
 <?php }
 function page_footer(): void { ?>
 </main></div>
-<footer class="foot">StockSpot &middot; Inventory management for Leonny G's &middot; Academic project, Mapúa University</footer>
 </body></html>
 <?php }
